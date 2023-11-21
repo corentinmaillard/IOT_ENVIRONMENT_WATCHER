@@ -1,7 +1,7 @@
 # IOT_ENVIRONMENT_WATCHER
 
 # Table of contents
-* About the project
+* [About the project](#about-the-project)
 
 # About the project
 The purpose of the project is to reduce the consumption of water while watering the plants of a fields during drought. For that we will use 3 types of sensors :
