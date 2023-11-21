@@ -3,6 +3,7 @@
  let mqtt = require('mqtt');
  
  const app = express();
+ app.use(express.static('public'));
  const server = require("http").Server(app);
  const io = require("socket.io")(server);
 
@@ -18,6 +19,7 @@ const ttnDevice = 'eui-70b3d57ed0062cb4';
     username: ttnUsername,
     password: ttnPassword,
   });
+
  client.on('connect', () => {
     console.log('Connected to TTN MQTT');
    client.subscribe(`${ttnUsername}/devices/${ttnDevice}/up`);
@@ -25,5 +27,22 @@ const ttnDevice = 'eui-70b3d57ed0062cb4';
 
  // When TTN sends a message, notify the client via socket.io
  client.on('message', (topic, message) => {
-   io.emit('event-name', message);
+   io.emit('event-name', "hello world");
  });
+
+ app.set('view engine', 'ejs');
+ 
+ app.get('/', (req, res) => {
+  // You can replace 'index.html' with the actual name of your HTML file
+  res.render("dashboard.ejs")
+});
+
+io.on("connection", function (socket) {
+  console.log('Client')
+  io.emit('event-name', 'hello');
+})
+
+
+server.listen( 8000, function(){
+  console.log('server is running on port 8000')
+});
