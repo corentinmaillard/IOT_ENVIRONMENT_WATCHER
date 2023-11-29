@@ -27,8 +27,23 @@ client.on('connect', () => {
 
 // When TTN sends a message, notify the client via socket.io
 client.on('message', (topic, message) => {
-  io.emit('event-name', message);
-  console.log(message);
+  
+  // Assuming `buffer` is your ArrayBuffer
+  const textDecoder = new TextDecoder('utf-8');
+  const jsonString = textDecoder.decode(new Uint8Array(message));
+
+  // Parse the JSON string
+  const jsonData = JSON.parse(jsonString);
+
+  // Extract information from the "decoded_payload" property
+  const decodedPayload = jsonData.uplink_message.decoded_payload;
+  const degreesC = decodedPayload.degreesC;
+  const humidity = decodedPayload.humidity;
+  const mes = [degreesC, humidity];
+
+  console.log("Degrees Celsius:", mes[0]);
+  console.log("Humidity:", mes[1]);
+  io.emit('event-name', mes[0]);
 });
 
 //handle errors
