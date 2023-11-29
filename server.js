@@ -44,10 +44,10 @@ app.get('/', (req, res) => {
 res.render("dashboard.ejs")
 });
 
-// io.on("connection", function (socket) {
-//   console.log('Client')
-//   io.emit('event-name', 'hello');
-// })
+io.on("connection", function (socket) {
+  console.log('Client')
+  io.emit('event-name', 'hello');
+})
 
 
 server.listen( 8000, function(){
