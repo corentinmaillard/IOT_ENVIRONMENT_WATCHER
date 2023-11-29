@@ -7,6 +7,11 @@
  const server = require("http").Server(app);
  const io = require("socket.io")(server);
 
+// Routes
+//app.use(express.urlencoded({extended:true}));
+//let router=require('./routes');
+//app.use('/',router);
+
  // Replace these with your TTN MQTT connection details
 const ttnMqttHost = 'eu1.cloud.thethings.network';
 const ttnMqttPort = 1883; // Default MQTT port
@@ -33,9 +38,17 @@ const ttnDevice = 'eui-70b3d57ed0062cb4';
  app.set('view engine', 'ejs');
  
  app.get('/', (req, res) => {
-  // You can replace 'index.html' with the actual name of your HTML file
-  res.render("dashboard.ejs")
+  
+  res.render("moisture.ejs")
 });
+app.get('/light', (req, res) => {
+  res.render("light.ejs");
+});
+app.get('/temperature', (req, res) => {
+  res.render("temperature.ejs");
+});
+
+
 
 io.on("connection", function (socket) {
   console.log('Client')
