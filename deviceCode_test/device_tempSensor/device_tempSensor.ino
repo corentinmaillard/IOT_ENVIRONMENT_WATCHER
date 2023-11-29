@@ -34,6 +34,7 @@
 #define DHTPIN 10
 #define DHTTYPE DHT11
 
+#define soilHumPIN A0
 
 
 // This EUI must be in little-endian format, so least-significant-byte
@@ -211,6 +212,14 @@ void do_send(osjob_t* j){
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("OP_TXRXPEND, not sending"));
     } else {
+        //read the soil humidity of the sensor
+        float soilHumidity =analogRead(soilHumPIN);
+        Serial.print("Soil humidity: "); Serial.print(soilHumidity);
+        Serial.println(" things");
+        soilHumidity = 100-(soilHumidity*100 /1023.0);
+        Serial.print("Soil humidity [percent]: "); Serial.print(soilHumidity);
+        Serial.println(" %");
+        
         // read the temperature from the DHT22
         float temperature = dht.readTemperature();
         Serial.print("Temperature: "); Serial.print(temperature);
@@ -243,6 +252,7 @@ void do_send(osjob_t* j){
         payload[2] = humidLow;
         payload[3] = humidHigh;
 
+
         // prepare upstream data transmission at the next possible time.
         // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
         // don't request an ack (the last parameter, if not zero, requests an ack from the network).
@@ -258,6 +268,8 @@ void setup() {
     Serial.begin(9600);
     Serial.println(F("Starting"));
 
+    pinMode(soilHumPIN, HIGH);
+    
     dht.begin();
 
     // LMIC init
