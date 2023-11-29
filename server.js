@@ -52,12 +52,20 @@ client.on("error", function (error) {
   process.exit(1)
 });
 
-app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => {
-// You can replace 'index.html' with the actual name of your HTML file
-res.render("dashboard.ejs")
+ app.set('view engine', 'ejs');
+ 
+ app.get('/', (req, res) => {
+  
+  res.render("moisture.ejs")
 });
+app.get('/light', (req, res) => {
+  res.render("light.ejs");
+});
+app.get('/temperature', (req, res) => {
+  res.render("temperature.ejs");
+});
+
+
 
 io.on("connection", function (socket) {
   console.log('Client')
