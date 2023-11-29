@@ -43,7 +43,9 @@ client.on('message', (topic, message) => {
 
   console.log("Degrees Celsius:", mes[0]);
   console.log("Humidity:", mes[1]);
-  io.emit('event-name', mes[0]);
+  io.emit('event-temperature', mes[0]);
+  io.emit('event-humidity', mes[1]);
+  //io.emit('event-soilmoisture', mes[0]);
 });
 
 //handle errors
