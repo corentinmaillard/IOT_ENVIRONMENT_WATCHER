@@ -15,6 +15,10 @@ function Decoder(bytes, port) {
     rawHumid = bytes[2] + bytes[3] * 256;
     decoded.humidity = sflt162f(rawHumid) * 100;
     
+    //soil humidity
+    rawSoilHumid = bytes[4] + bytes[5] * 256;
+    decoded.soilHumidity = sflt162f(rawSoilHumid) * 100;
+    
     return decoded;
   }
   
