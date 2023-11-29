@@ -5,10 +5,15 @@ let router=express.Router();
 
 router.get('/', (req,res)=>
 {
-    // on est redirigé vers /user direct
-    res.redirect('/');
+    res.render("moisture.ejs");
 });
 
+router.get('/light', (req, res) => {
+  res.render("light.ejs");
+});
 
+router.get('/temperature', (req, res) => {
+  res.render("temperature.ejs");
+});
 
-module.exports=router;
+module.exports = router;

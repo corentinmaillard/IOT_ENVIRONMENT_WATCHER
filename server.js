@@ -13,10 +13,6 @@ const ttnMqttPort = 1883; // Default MQTT port
 const ttnUsername = 'environment-watcher@ttn';
 const ttnPassword = 'NNSXS.5B7EE34DXWYT5TDNBTAQRO7YFTHDL7AJ6RN7LQI.XTWMASAFRVTKPSCUCWU7YWUPBVTSLX56QUFWP5SS67RSDXNYVIFQ';
 const ttnDevice = 'eui-70b3d57ed0062cb4';
-const temperature = [];
-const moisture = [];
-const soilmoisture = [];
-const light = [];
 
 // Connect to TTN and subscribe to your device
 const client = mqtt.connect(`mqtt://${ttnMqttHost}:${ttnMqttPort}`, {
@@ -24,13 +20,13 @@ const client = mqtt.connect(`mqtt://${ttnMqttHost}:${ttnMqttPort}`, {
   password: ttnPassword,
 });
 
- client.on('connect', () => {
-    console.log('Connected to TTN MQTT');
-   client.subscribe(`v3/${ttnUsername}/devices/${ttnDevice}/up`);
- });
+client.on('connect', () => {
+  console.log('Connected to TTN MQTT');
+  client.subscribe(`v3/${ttnUsername}/devices/${ttnDevice}/up`);
+});
 
- // When TTN sends a message, notify the client via socket.io
- client.on('message', (topic, message) => {
+// When TTN sends a message, notify the client via socket.io
+client.on('message', (topic, message) => {
   
   // Assuming `buffer` is your ArrayBuffer
   const textDecoder = new TextDecoder('utf-8');
@@ -43,31 +39,29 @@ const client = mqtt.connect(`mqtt://${ttnMqttHost}:${ttnMqttPort}`, {
   const decodedPayload = jsonData.uplink_message.decoded_payload;
   const degreesC = decodedPayload.degreesC;
   const humidity = decodedPayload.humidity;
-  const soilHumidity= decodedPayload.soilHumidity
-  const mes = [degreesC, humidity,soilHumidity];
+  const mes = [degreesC, humidity];
 
   console.log("Degrees Celsius:", mes[0]);
   console.log("Humidity:", mes[1]);
-  console.log("soilHumidity:", mes[2]);
-  io.emit('event-name', mes[0]);
-  temperature.push(mes[0]);
-  moisture.push(mes[1])
-  soilmoisture.push(mes[2])
-  save()
+  io.emit('event-temperature', mes[0]);
+  io.emit('event-humidity', mes[1]);
+  //io.emit('event-soilmoisture', mes[0]);
+});
+
+//handle errors
+client.on("error", function (error) {
+  console.log("Can't connect" + error);
+  process.exit(1)
 });
 
  app.set('view engine', 'ejs');
- 
- app.get('/', (req, res) => {
-  
-  res.render("moisture.ejs")
-});
-app.get('/light', (req, res) => {
-  res.render("light.ejs");
-});
-app.get('/temperature', (req, res) => {
-  res.render("temperature.ejs");
-});
+
+// Routes
+app.use(express.urlencoded({extended:true}));
+
+let router=require('./routes');
+app.use('/',router);
+
 
 
 
@@ -76,28 +70,6 @@ io.on("connection", function (socket) {
   io.emit('event-name', 'hello');
 })
 
-const fs = require('fs');
-
-
-
-function save(){
-  const datas = {
-    "Temperature": temperature,
-    "Moisture": moisture,
-    "soilmoisture": soilmoisture,
-    "Light": light,
-  };
-  
-  const dictString = JSON.stringify(datas, null, 2); // Adding indentation for better readability
-  
-  fs.writeFile('./public/thing.json', dictString, (err) => {
-    if (err) throw err;
-    console.log('File has been saved!');
-  });
-}
-
-
-// const value = JSON.parse()
 
 server.listen( 8000, function(){
   console.log('server is running on port 8000')
