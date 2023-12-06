@@ -55,7 +55,7 @@ static const u1_t PROGMEM APPKEY[16] = { 0x46, 0x9D,0xA3,0xA0,0x1E,0xBF,0x5C,0x8
 void os_getDevKey (u1_t* buf) {  memcpy_P(buf, APPKEY, 16);}
 
 // payload to send to TTN gateway
-static uint8_t payload[8];
+static uint8_t payload[9];
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -220,6 +220,12 @@ void do_send(osjob_t* j){
         Serial.print("Soil humidity [percent]: "); Serial.print(soilHumidity);
         Serial.println(" %");
         soilHumidity = soilHumidity/100;
+
+        //read the lux
+        float luxData =10;
+        Serial.print("luminosity  : "); Serial.print(luxData);
+        Serial.println(" lux");
+        luxData = luxData/100;
         
         // read the temperature from the DHT22
         float temperature = dht.readTemperature();
@@ -255,14 +261,20 @@ void do_send(osjob_t* j){
         payload[3] = humidHigh;
 
         // float -> int
-
         uint16_t payloadSoilHumid = LMIC_f2sflt16(soilHumidity);
-        
         // int -> bytes
         byte soilHumidLow = lowByte(payloadSoilHumid);
         byte soilHumidHigh = highByte(payloadSoilHumid);
         payload[4] = soilHumidLow;
         payload[5] = soilHumidHigh;
+
+        // float -> int
+        uint16_t payloadLuminosity = LMIC_f2sflt16(luxData);
+        // int -> bytes
+        byte luminosityLow = lowByte(payloadLuminosity);
+        byte luminosityHigh = highByte(payloadLuminosity);
+        payload[6] = luminosityLow;
+        payload[7] = luminosityHigh;
 
         // prepare upstream data transmission at the next possible time.
         // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
