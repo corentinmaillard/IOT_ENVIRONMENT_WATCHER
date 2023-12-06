@@ -27,6 +27,7 @@ const client = mqtt.connect(`mqtt://${ttnMqttHost}:${ttnMqttPort}`, {
  client.on('connect', () => {
     console.log('Connected to TTN MQTT');
    client.subscribe(`v3/${ttnUsername}/devices/${ttnDevice}/up`);
+   io.emit
  });
 
  // When TTN sends a message, notify the client via socket.io
@@ -43,17 +44,21 @@ const client = mqtt.connect(`mqtt://${ttnMqttHost}:${ttnMqttPort}`, {
   const decodedPayload = jsonData.uplink_message.decoded_payload;
   const degreesC = decodedPayload.degreesC;
   const humidity = decodedPayload.humidity;
-  const soilHumidity= decodedPayload.soilHumidity
-  const mes = [degreesC, humidity,soilHumidity];
+  const soilHumidity= decodedPayload.soilHumidity;
+  const light= decodedPayload.lux;
+  const mes = [degreesC, humidity,soilHumidity, light];
 
   console.log("Degrees Celsius:", mes[0]);
   console.log("Humidity:", mes[1]);
   console.log("soilHumidity:", mes[2]);
-  io.emit('event-name', mes[0]);
+  console.log("light:", mes[3]);
+  io.emit('event-temperature', mes[0]);
+  io.emit('event-humidity', mes[2]);
+  io.emit('event-light', mes[3]);
   temperature.push(mes[0]);
   moisture.push(mes[1])
   soilmoisture.push(mes[2])
-  save()
+  // save()
 });
 
  app.set('view engine', 'ejs');
@@ -73,28 +78,27 @@ app.get('/temperature', (req, res) => {
 
 io.on("connection", function (socket) {
   console.log('Client')
-  io.emit('event-name', 'hello');
 })
 
 const fs = require('fs');
 
 
 
-function save(){
-  const datas = {
-    "Temperature": temperature,
-    "Moisture": moisture,
-    "soilmoisture": soilmoisture,
-    "Light": light,
-  };
+// function save(){
+//   const datas = {
+//     "Temperature": temperature,
+//     "Moisture": moisture,
+//     "soilmoisture": soilmoisture,
+//     "Light": light,
+//   };
   
-  const dictString = JSON.stringify(datas, null, 2); // Adding indentation for better readability
+//   const dictString = JSON.stringify(datas, null, 2); // Adding indentation for better readability
   
-  fs.writeFile('./public/thing.json', dictString, (err) => {
-    if (err) throw err;
-    console.log('File has been saved!');
-  });
-}
+//   fs.writeFile('./public/thing.json', dictString, (err) => {
+//     if (err) throw err;
+//     console.log('File has been saved!');
+//   });
+// }
 
 
 // const value = JSON.parse()
