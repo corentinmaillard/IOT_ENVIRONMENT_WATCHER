@@ -92,16 +92,12 @@ const client = mqtt.connect(`mqtt://${ttnMqttHost}:${ttnMqttPort}`, {
 
  app.set('view engine', 'ejs');
  
- app.get('/', (req, res) => {
-  
-  res.render("moisture.ejs")
-});
-app.get('/light', (req, res) => {
-  res.render("light.ejs");
-});
-app.get('/temperature', (req, res) => {
-  res.render("temperature.ejs");
-});
+
+// Routes
+app.use(express.urlencoded({extended:true}));
+
+let router=require('./routes');
+app.use('/',router);
 
 
 

@@ -8,6 +8,11 @@ router.get('/', (req,res)=>
     res.render("moisture.ejs");
 });
 
+router.get('/soilmoisture', (req,res)=>
+{
+    res.render("soilmoisture.ejs");
+});
+
 router.get('/light', (req, res) => {
   res.render("light.ejs");
 });
