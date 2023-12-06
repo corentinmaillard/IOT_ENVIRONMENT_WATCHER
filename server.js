@@ -7,7 +7,7 @@ app.use(express.static('public'));
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
-import readJSONFile from './readjson'
+// import readJSONFile from './readjson'
 
  // Replace these with your TTN MQTT connection details
 const ttnMqttHost = 'eu1.cloud.thethings.network';
