@@ -1,9 +1,13 @@
 let express=require('express');
 let router=express.Router();
 
-
-
 router.get('/', (req,res)=>
+{
+    res.render("dashboard.ejs");
+});
+
+
+router.get('/moisture', (req,res)=>
 {
     res.render("moisture.ejs");
 });
