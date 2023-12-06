@@ -7,6 +7,8 @@ app.use(express.static('public'));
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
+import readJSONFile from './readjson'
+
  // Replace these with your TTN MQTT connection details
 const ttnMqttHost = 'eu1.cloud.thethings.network';
 const ttnMqttPort = 1883; // Default MQTT port
@@ -49,6 +51,7 @@ const client = mqtt.connect(`mqtt://${ttnMqttHost}:${ttnMqttPort}`, {
  client.on('connect', () => {
     console.log('Connected to TTN MQTT');
    client.subscribe(`v3/${ttnUsername}/devices/${ttnDevice}/up`);
+   io.emit
  });
 
  // When TTN sends a message, notify the client via socket.io
@@ -104,7 +107,6 @@ app.get('/temperature', (req, res) => {
 
 io.on("connection", function (socket) {
   console.log('Client')
-  io.emit('event-name', 'hello');
 })
 
 // function limit(list){
@@ -126,14 +128,14 @@ function save(){
     "Soilmoisture": soilmoisture,
     "Light": lightsensor,
   };
-  
-  const dictString = JSON.stringify(datas, null, 2); // Adding indentation for better readability
-  
-  fs.writeFile('./public/thing.json', dictString, (err) => {
-    if (err) throw err;
-    console.log('File has been saved!');
-  });
 }
+//   const dictString = JSON.stringify(datas, null, 2); // Adding indentation for better readability
+  
+//   fs.writeFile('./public/thing.json', dictString, (err) => {
+//     if (err) throw err;
+//     console.log('File has been saved!');
+//   });
+// }
 
 
 // const value = JSON.parse()
