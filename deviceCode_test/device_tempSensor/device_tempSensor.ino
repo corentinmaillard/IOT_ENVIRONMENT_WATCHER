@@ -3,6 +3,8 @@
 
 //library : MCCI LoRaWAN LMIC library
 //library : dht sensor
+//library : Adafruit Unified Sensor by adafruit
+//library : adafruit tsl2561 by adafruit
 //exemple : ttn-adp-featehr-us915-dht22
 
 /*******************************************************************************
@@ -27,6 +29,11 @@
 #include <hal/hal.h>
 #include <SPI.h>
 
+//for light sensor
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_TSL2561_U.h>
+
 // include the DHT22 Sensor Library
 #include "DHT.h"
 
@@ -36,6 +43,7 @@
 
 #define soilHumPIN A0
 
+Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
 
 // This EUI must be in little-endian format, so least-significant-byte
 // first. When copying an EUI from ttnctl output, this means to reverse
@@ -212,20 +220,24 @@ void do_send(osjob_t* j){
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("OP_TXRXPEND, not sending"));
     } else {
+        sensors_event_t luxEvent;
+        tsl.getEvent(&luxEvent);
+
+        
         //read the soil humidity of the sensor
         float soilHumidity =analogRead(soilHumPIN);
-        Serial.print("Soil humidity: "); Serial.print(soilHumidity);
-        Serial.println(" things");
+        //Serial.print("Soil humidity: "); Serial.print(soilHumidity);
+        //Serial.println(" things");
         soilHumidity = 100-(soilHumidity*100 /1023.0);
         Serial.print("Soil humidity [percent]: "); Serial.print(soilHumidity);
         Serial.println(" %");
         soilHumidity = soilHumidity/100;
 
         //read the lux
-        float luxData =10;
+        uint16_t luxData = luxEvent.light;
         Serial.print("luminosity  : "); Serial.print(luxData);
         Serial.println(" lux");
-        luxData = luxData/100;
+        //luxData = 10/100;
         
         // read the temperature from the DHT22
         float temperature = dht.readTemperature();
@@ -269,10 +281,10 @@ void do_send(osjob_t* j){
         payload[5] = soilHumidHigh;
 
         // float -> int
-        uint16_t payloadLuminosity = LMIC_f2sflt16(luxData);
+        //uint16_t payloadLuminosity = LMIC_f2sflt16(luxData);
         // int -> bytes
-        byte luminosityLow = lowByte(payloadLuminosity);
-        byte luminosityHigh = highByte(payloadLuminosity);
+        byte luminosityLow = lowByte(luxData);
+        byte luminosityHigh = highByte(luxData);
         payload[6] = luminosityLow;
         payload[7] = luminosityHigh;
 
@@ -294,6 +306,16 @@ void setup() {
     pinMode(soilHumPIN, INPUT);
     
     dht.begin();
+
+    //lux sensor
+    sensor_t lightSensor;
+    tsl.getSensor(&lightSensor);
+
+    /* Display some basic information on this sensor */
+    displaySensorDetails();
+    
+    /* Setup the sensor gain and integration time */
+    configureSensor();
 
     // LMIC init
     os_init();
@@ -320,4 +342,51 @@ void loop() {
   // but beware that LoRaWAN timing is pretty tight, so if you do more than a few milliseconds of work, you
   // will want to call `os_runloop_once()` every so often, to keep the radio running.
   os_runloop_once();
+}
+
+/**************************************************************************/
+/*
+    Configures the gain and integration time for the TSL2561
+*/
+/**************************************************************************/
+void configureSensor(void)
+{
+  /* You can also manually set the gain or enable auto-gain support */
+  // tsl.setGain(TSL2561_GAIN_1X);      /* No gain ... use in bright light to avoid sensor saturation */
+  // tsl.setGain(TSL2561_GAIN_16X);     /* 16x gain ... use in low light to boost sensitivity */
+  tsl.enableAutoRange(true);            /* Auto-gain ... switches automatically between 1x and 16x */
+  
+  /* Changing the integration time gives you better sensor resolution (402ms = 16-bit data) */
+  tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_13MS);      /* fast but low resolution */
+  // tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_101MS);  /* medium resolution and speed   */
+  // tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_402MS);  /* 16-bit data but slowest conversions */
+
+  /* Update these values depending on what you've set above! */  
+  Serial.println("------------------------------------");
+  Serial.print  ("Gain:         "); Serial.println("Auto");
+  Serial.print  ("Timing:       "); Serial.println("13 ms");
+  Serial.println("------------------------------------");
+}
+
+
+/**************************************************************************/
+/*
+    Displays some basic information on this sensor from the unified
+    sensor API sensor_t type (see Adafruit_Sensor for more information)
+*/
+/**************************************************************************/
+void displaySensorDetails(void)
+{
+  sensor_t sensor;
+  tsl.getSensor(&sensor);
+  Serial.println("------------------------------------");
+  Serial.print  ("Sensor:       "); Serial.println(sensor.name);
+  Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
+  Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
+  Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" lux");
+  Serial.print  ("Min Value:    "); Serial.print(sensor.min_value); Serial.println(" lux");
+  Serial.print  ("Resolution:   "); Serial.print(sensor.resolution); Serial.println(" lux");  
+  Serial.println("------------------------------------");
+  Serial.println("");
+  delay(500);
 }
