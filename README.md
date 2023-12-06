@@ -17,12 +17,17 @@ The purpose of the project is to reduce the consumption of water while watering 
 ## Library
 - MCCI LoRaWAN LMIC library (il faut change la region dans  "project_config/lmic_project_config.h")
 - DHT sensor library
+- Adafruit Unified Sensor by adafruit
+- adafruit tsl2561 by adafruit
+
 ## Source :
 - https://github.com/parastuffs/IT4L-IOT/wiki/Adafruit-Feather-M0-configuration
 - https://learn.adafruit.com/adafruit-feather-m0-radio-with-lora-radio-module/using-with-arduino-ide
 
 ## Tuto utilisé:
 - https://learn.adafruit.com/the-things-network-for-feather?view=all
+- https://learn.adafruit.com/tsl2561/overview
+
 
 
 
