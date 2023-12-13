@@ -1,8 +1,6 @@
 let express = require('express');
 let mqtt = require('mqtt');
-const { all } = require('./routes');
 const app = express();
-app.use(express.static('public'));
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
@@ -26,5 +24,6 @@ client.on('connect', () => {
 })
 return client
 };
+const client = ttnconnect();
 
-module.exports = { ttnconnect, express, app, server, io };
+module.exports = { ttnconnect, client, express, app, server, io };

@@ -1,6 +1,8 @@
-client,Datamanage = require('./server')
+const Dataload = require('./data_load');
+const ttn = require('./connect-ttn');
+const client = ttn.client
 
-function update(){
+function update(temperature,moisture,soilmoisture,lightsensor){
     client.on('message', (topic, message) => {
   
         // Assuming `buffer` is your ArrayBuffer
@@ -23,11 +25,33 @@ function update(){
         console.log("Soilmoisture:", mes[2]);
         console.log("Light :",mes[3])
         io.emit('event-name', mes[0]);
-        Datamanage.add(temperature,mes[0])
-        Datamanage.add(moisture,mes[1])
-        Datamanage.add(soilmoisture,mes[2])
-        Datamanage.add(lightsensor,mes[3])
+        Dataload.add(temperature,mes[0])
+        Dataload.add(moisture,mes[1])
+        Dataload.add(soilmoisture,mes[2])
+        Dataload.add(lightsensor,mes[3])
         // console.log("shifted",temperature.shift())
       });
+    return temperature,moisture,soilmoisture,lightsensor
 }
-module.exports = { update };
+
+// function save(){
+//   console.log(temperature)
+  
+//   const datas = {
+//     "Temperature": temperature,
+//     "Moisture": moisture,
+//     "Soilmoisture": soilmoisture,
+//     "Light": lightsensor,
+//   };
+
+//   const dictString = JSON.stringify(datas, null, 2); // Adding indentation for better readability
+  
+//   fs.writeFile('./public/thing.json', dictString, (err) => {
+//     if (err) throw err;
+//     console.log('File has been saved!');
+//   });
+// }
+// server initialisation
+
+
+module.exports = { update};
