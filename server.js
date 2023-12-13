@@ -30,7 +30,7 @@ fs.readFile('./public/thing.json', 'utf8', (err, data) => {
     const jsonData = JSON.parse(data);
     // Maintenant, vous pouvez utiliser les données JSON (jsonData) comme vous le souhaitez.
     console.log('Contenu du fichier JSON :', jsonData);
-    console.log('temp',jsonData.Temperature)
+    //console.log('temp',jsonData.Temperature)
     temperature = jsonData.Temperature
     moisture = jsonData.Moisture
     soilmoisture = jsonData.Soilmoisture

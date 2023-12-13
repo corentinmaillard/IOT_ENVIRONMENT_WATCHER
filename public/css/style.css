@@ -1,0 +1,55 @@
+#navigator {
+    display: flex;
+    justify-content: space-around; /* Distribute items equally */
+    align-items: center; /* Center items vertically */
+}
+
+.NavBarButton {
+    border: none; /* Remove button border */
+    outline: none; /* Remove button outline */
+    background-color: transparent; /* Set background color to transparent */
+    padding: 10px; /* Add padding for better spacing */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 150%;
+}
+.NavBarButton:hover {
+    color: lightblue;
+    border-left: 3px solid black;
+
+}
+h1{
+    font-size: 300%;
+}
+#affiche_light {
+    border: 2px lightblue;
+    background-color: lightblue;
+    padding: 0px 50px 0px 50px;
+    width: min-content;
+}
+#affiche_humidity{
+    border: 2px lightblue;
+    background-color: lightblue;
+    padding: 0px 50px 0px 50px;
+    width: min-content;
+}
+#affiche_soilhumidity {
+    border: 2px lightblue;
+    background-color: lightblue;
+    padding: 0px 50px 0px 50px;
+    width: min-content;
+}
+#affiche_temperature {
+    border: 2px lightblue;
+    background-color: lightblue;
+    padding: 0px 50px 0px 50px;
+    width: min-content;
+}
+p{
+    display: inline;
+    font-size: 150%;
+}
+
+#img{
+    text-align: center;
+    width: 50%;
+}
