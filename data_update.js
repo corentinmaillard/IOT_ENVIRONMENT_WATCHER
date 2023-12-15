@@ -18,13 +18,24 @@ function update(temperature,moisture,soilmoisture,lightsensor){
         const humidity = decodedPayload.humidity;
         const soilHumidity= decodedPayload.soilHumidity;
         const light = decodedPayload.lux;
-        const mes = [degreesC, humidity,soilHumidity,light];
+        const timestampString = jsonData.uplink_message.received_at;
+        // Convert the timestamp to a Date object
+        const timestamp = new Date(timestampString);
+        // Extract the time components
+        const hours = timestamp.getHours();
+        const minutes = timestamp.getMinutes();
+        const time = `${hours}:${minutes}`;
+        const day = timestamp.getDate();
+        const mes = [degreesC, humidity,soilHumidity,light, day, time];
+
       
         console.log("Temperature:", mes[0]);
         console.log("Moisture:", mes[1]);
         console.log("Soilmoisture:", mes[2]);
         console.log("Light :",mes[3])
-        io.emit('event-name', mes[0]);
+        console.log("Day :" ,mes[4]);
+        console.log("Time :" ,mes[5]);
+        //io.emit('event-name', mes[0]);
         Dataload.add(temperature,mes[0])
         Dataload.add(moisture,mes[1])
         Dataload.add(soilmoisture,mes[2])
