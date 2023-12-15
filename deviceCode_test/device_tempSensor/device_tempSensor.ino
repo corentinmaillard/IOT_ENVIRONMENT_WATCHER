@@ -41,6 +41,8 @@
 #define DHTPIN 10
 #define DHTTYPE DHT11
 
+#define debug false
+
 #define soilHumPIN A0
 
 Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
@@ -237,7 +239,6 @@ void do_send(osjob_t* j){
         uint16_t luxData = luxEvent.light;
         Serial.print("luminosity  : "); Serial.print(luxData);
         Serial.println(" lux");
-        //luxData = 10/100;
         
         // read the temperature from the DHT22
         float temperature = dht.readTemperature();
@@ -299,7 +300,9 @@ void do_send(osjob_t* j){
 
 void setup() {
     delay(5000);
-    while (! Serial);
+    if(debug){
+      while (! Serial);
+    }
     Serial.begin(9600);
     Serial.println(F("Starting"));
 
