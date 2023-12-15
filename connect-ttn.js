@@ -20,7 +20,6 @@ client.on('connect', () => {
     console.log('Connected to TTN MQTT');
    client.subscribe(`v3/${ttnUsername}/devices/${ttnDevice}/up`);
    io.emit
-   
 })
 return client
 };
