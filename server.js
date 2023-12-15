@@ -43,14 +43,17 @@ ttn.client.on('message', (topic, message) => {
     const date = `${day}.${month}.${year}`;
     const time = `${hours}:${minutes}`;
     
-    const mes = [degreesC, humidity,soilHumidity,light, date, time];
-        console.log("Temperature:", mes[0]);
-        console.log("Moisture:", mes[1]);
-        console.log("Soilmoisture:", mes[2]);
-        console.log("Light :",mes[3])
-        console.log("Date :" ,mes[4]);
-        console.log("Time :" ,mes[5]);
-    // ttn.io.emit('event-name', mes[0]);
+    const mes = [degreesC, humidity, soilHumidity,light, date, time];
+    console.log("Temperature:", mes[0]);
+    console.log("Moisture:", mes[1]);
+    console.log("Soilmoisture:", mes[2]);
+    console.log("Light :",mes[3])
+    console.log("Date :" ,mes[4]);
+    console.log("Time :" ,mes[5]);
+    ttn.io.emit('event-temperature', mes[0]);
+    ttn.io.emit('event-humidity', mes[1]);
+    ttn.io.emit('event-soilhumidity', mes[2]);
+    ttn.io.emit('event-light', mes[3]);
     Dataload.add(temperaturel,mes[0]);
     Dataload.add(moisturel,mes[1]);
     Dataload.add(soilmoisturel,mes[2]);
