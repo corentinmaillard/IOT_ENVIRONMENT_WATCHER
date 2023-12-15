@@ -19,6 +19,7 @@
 }
 h1{
     font-size: 300%;
+    padding-bottom: 3%;
 }
 #affiche_light {
     border: 2px lightblue;

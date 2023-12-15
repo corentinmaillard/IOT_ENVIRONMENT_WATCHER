@@ -19,11 +19,11 @@ function update(temperature,moisture,soilmoisture,lightsensor){
         const soilHumidity= decodedPayload.soilHumidity;
         const light = decodedPayload.lux;
         const timestampString = jsonData.uplink_message.received_at;
-        
+
         // Convert the timestamp to a Date object
         const timestamp = new Date(timestampString);
         const day = timestamp.getDate();
-        const month = timestamp.getMonth();
+        const month = timestamp.getMonth() + 1;
         const year = timestamp.getFullYear();
         const hours = timestamp.getHours();
         const minutes = timestamp.getMinutes();

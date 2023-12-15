@@ -44,8 +44,8 @@
             .then(response => response.json())
             .then(data => {
                 // Display light
-                lightChart.data.labels = Array.from({ length: data.Light.length }, (_, i) => i + 1);
-                lightChart.data.datasets[0].data = data.Light;
+                lightChart.data.labels = Array.from({ length: data.Light.length }, (_, i) => i + 1); //axe x label
+                lightChart.data.datasets[0].data = data.Light; // axe y values
                 lightChart.update();
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -53,8 +53,8 @@
 
         socket.on('event-light', (data) => {
             // Update the chart data
-            lightChart.data.labels.push(new Date().toLocaleTimeString());
-            lightChart.data.datasets[0].data.push(data);
+            lightChart.data.labels.push(new Date().toLocaleTimeString()); //new axe x label
+            lightChart.data.datasets[0].data.push(data); // new axe y value
             lightChart.update();
 
             // Update the displayed light value
