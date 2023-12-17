@@ -27,11 +27,11 @@ async function fetchData() {
     }
     catch{}
     try{
-        document.getElementById("affiche_humidity").innerHTML = json["Soilmoisture"][json["Soilmoisture"].length-1]
+        document.getElementById("affiche_humidity").innerHTML = json["Moisture"][json["Moisture"].length-1]
     }
     catch{}
     try{
-        document.getElementById("affiche_soilhumidity").innerHTML = json["Moisture"][json["Moisture"].length-1]
+        document.getElementById("affiche_soilhumidity").innerHTML = json["Soilmoisture"][json["Soilmoisture"].length-1]
     }
     catch{}
     try{
