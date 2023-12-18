@@ -5,8 +5,9 @@ let temperaturel = [];
 let moisturel = [];
 let soilmoisturel = [];
 let lightsensorl = [];
+let timel = [];
 
-Dataload.load_data_from_Json(temperaturel,moisturel,soilmoisturel,lightsensorl);
+Dataload.load_data_from_Json(temperaturel,moisturel,soilmoisturel,lightsensorl,timel);
 
 
 /// Connect to TTN and subscribe to your device :
@@ -40,16 +41,17 @@ ttn.client.on('message', (topic, message) => {
     const year = timestamp.getFullYear();
     const hours = timestamp.getHours();
     const minutes = timestamp.getMinutes();
-    const date = `${day}.${month}.${year}`;
-    const time = `${hours}:${minutes}`;
+    const secondes = timestamp.getSeconds();
+    // const date = `${day}.${month}.${year}`;
+    const time = `${hours}:${minutes}:${secondes}`;
     
-    const mes = [degreesC, humidity, soilHumidity,light, date, time];
+    const mes = [degreesC, humidity, soilHumidity,light,time];
     console.log("Temperature:", mes[0]);
     console.log("Moisture:", mes[1]);
     console.log("Soilmoisture:", mes[2]);
     console.log("Light :",mes[3])
     console.log("Date :" ,mes[4]);
-    console.log("Time :" ,mes[5]);
+    // console.log("Time :" ,mes[5]);
     ttn.io.emit('event-temperature', mes[0]);
     ttn.io.emit('event-humidity', mes[1]);
     ttn.io.emit('event-soilhumidity', mes[2]);
@@ -58,9 +60,10 @@ ttn.client.on('message', (topic, message) => {
     Dataload.add(moisturel,mes[1]);
     Dataload.add(soilmoisturel,mes[2]);
     Dataload.add(lightsensorl,mes[3]);
+    Dataload.add(timel,mes[4]);
 
     // console.log("shifted",temperature.shift())
-    Dataload.save(temperaturel,moisturel,soilmoisturel,lightsensorl)
+    Dataload.save(temperaturel,moisturel,soilmoisturel,lightsensorl,timel)
   });
 
 
