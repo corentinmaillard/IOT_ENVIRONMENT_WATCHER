@@ -51,15 +51,6 @@
             .catch(error => console.error('Error fetching data:', error));
 
 
-        socket.on('event-light', (data) => {
-            // Update the chart data
-            lightChart.data.labels.push(new Date().toLocaleTimeString()); //new axe x label
-            lightChart.data.datasets[0].data.push(data); // new axe y value
-            lightChart.update();
-
-            // Update the displayed light value
-            document.getElementById("affiche_light").innerHTML = data;
-        });
     </script>
 
 
