@@ -44,7 +44,7 @@
             .then(response => response.json())
             .then(data => {
                 // Display light
-                lightChart.data.labels = Array.from({ length: data.Light.length }, (_, i) => i + 1); //axe x label
+                lightChart.data.labels = data.Time; //axe x label
                 lightChart.data.datasets[0].data = data.Light; // axe y values
                 lightChart.update();
             })

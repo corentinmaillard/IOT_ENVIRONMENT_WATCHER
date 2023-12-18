@@ -43,7 +43,7 @@
             .then(response => response.json())
             .then(data => {
 
-                temperatureChart.data.labels = Array.from({ length: data.Temperature.length }, (_, i) => i + 1);
+                temperatureChart.data.labels =  data.Time;
                 temperatureChart.data.datasets[0].data = data.Temperature;
                 temperatureChart.update();
             })

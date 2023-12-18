@@ -43,7 +43,7 @@
                 .then(response => response.json())
                 .then(data => {
 
-                    moistureChart.data.labels = Array.from({ length: data.Moisture.length }, (_, i) => i + 1);
+                    moistureChart.data.labels = data.Time;
                     moistureChart.data.datasets[0].data = data.Moisture;
                     moistureChart.update();
                 })
