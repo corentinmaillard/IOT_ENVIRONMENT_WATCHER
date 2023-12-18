@@ -11,7 +11,7 @@ function load_data_from_Json(temperature,moisture,soilmoisture,lightsensor,time)
     moisture.push(...jsonData.Moisture)
     soilmoisture.push(...jsonData.Soilmoisture)
     lightsensor.push(...jsonData.Light)
-    time.push(...jsonData.time)
+    time.push(...jsonData.Time)
   } catch (parseError) {
     console.error('Erreur de parsing JSON :', parseError);
   }
