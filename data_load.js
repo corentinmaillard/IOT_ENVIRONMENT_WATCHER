@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function load_data_from_Json(temperature,moisture,soilmoisture,lightsensor){
+function load_data_from_Json(temperature,moisture,soilmoisture,lightsensor,time){
 
   try {
     const data = fs.readFileSync('./public/thing.json', 'utf8');
@@ -11,6 +11,7 @@ function load_data_from_Json(temperature,moisture,soilmoisture,lightsensor){
     moisture.push(...jsonData.Moisture)
     soilmoisture.push(...jsonData.Soilmoisture)
     lightsensor.push(...jsonData.Light)
+    time.push(...jsonData.time)
   } catch (parseError) {
     console.error('Erreur de parsing JSON :', parseError);
   }
@@ -25,9 +26,10 @@ function add(list,value){
 }
 }
 
-function save(temperature,moisture,soilmoisture,lightsensor){
+function save(temperature,moisture,soilmoisture,lightsensor,time){
   
     const datas = {
+      "Time": time,
       "Temperature": temperature,
       "Moisture": moisture,
       "Soilmoisture": soilmoisture,
