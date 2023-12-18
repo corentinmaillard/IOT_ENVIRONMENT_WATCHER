@@ -50,14 +50,6 @@
             .catch(error => console.error('Error fetching data:', error));
 
 
-        socket.on('event-temperature', (data) => {
-            // Update the chart data
-            temperatureChart.data.labels.push(new Date().toLocaleTimeString());
-            temperatureChart.data.datasets[0].data.push(data);
-            temperatureChart.update();
-
-            document.getElementById("affiche_temperature").innerHTML = data;
-        });
     </script>
 
 
