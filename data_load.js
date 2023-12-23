@@ -1,22 +1,23 @@
 const fs = require('fs');
 
+// load all data from Json
 function load_data_from_Json(temperature,moisture,soilmoisture,lightsensor,time){
 
   try {
     const data = fs.readFileSync('./public/thing.json', 'utf8');
     const jsonData = JSON.parse(data);
-    // Maintenant, vous pouvez utiliser les données JSON (jsonData) comme vous le souhaitez.
-    console.log('Contenu du fichier JSON :', jsonData);
+    console.log('Content of the JSON File:', jsonData);
     temperature.push(...jsonData.Temperature)
     moisture.push(...jsonData.Moisture)
     soilmoisture.push(...jsonData.Soilmoisture)
     lightsensor.push(...jsonData.Light)
     time.push(...jsonData.Time)
   } catch (parseError) {
-    console.error('Erreur de parsing JSON :', parseError);
+    console.error(' JSON parsing Error  :', parseError);
   }
 
 }
+// Function to add values to a list
 function add(list,value){
   if (list !== undefined) {
     list.push(value)
@@ -25,7 +26,7 @@ function add(list,value){
     console.log("List is undefined, not adding to the array.");
 }
 }
-
+// saves the new data to the Json
 function save(temperature,moisture,soilmoisture,lightsensor,time){
   
     const datas = {
@@ -45,4 +46,3 @@ function save(temperature,moisture,soilmoisture,lightsensor,time){
 
 
 module.exports =  {load_data_from_Json,add,save};
-// export default load_data_from_Json;

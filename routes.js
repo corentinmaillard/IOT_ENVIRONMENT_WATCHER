@@ -6,7 +6,6 @@ router.get('/', (req,res)=>
     res.render("dashboard.ejs");
 });
 
-
 router.get('/moisture', (req,res)=>
 {
     res.render("moisture.ejs");
