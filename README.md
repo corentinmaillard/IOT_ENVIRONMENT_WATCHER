@@ -10,12 +10,12 @@ The purpose of the project is to reduce the consumption of water while watering 
 - Humidity and temperature sensor : to check the temperature
 
 # Installation device (with Arduino)
-## Gestionnaire de cartes
+## Boards Manager
 - Arduino SAMD Boards
-- Adafruit SAMD Boards (pour installer aller dans preference et mettre "https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" dans "Additional Boards Manager URLs")
+- Adafruit SAMD Boards (to install go in "preference" menu and add "https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" in "Additional Boards Manager URLs")
 
-## Library
-- MCCI LoRaWAN LMIC library (il faut change la region dans  "project_config/lmic_project_config.h")
+## Libraries
+- MCCI LoRaWAN LMIC library (change the region in  "project_config/lmic_project_config.h")
 - DHT sensor library
 - Adafruit Unified Sensor by adafruit
 - adafruit tsl2561 by adafruit
@@ -24,7 +24,7 @@ The purpose of the project is to reduce the consumption of water while watering 
 - https://github.com/parastuffs/IT4L-IOT/wiki/Adafruit-Feather-M0-configuration
 - https://learn.adafruit.com/adafruit-feather-m0-radio-with-lora-radio-module/using-with-arduino-ide
 
-## Tuto utilisé:
+## Tutorial used:
 - https://learn.adafruit.com/the-things-network-for-feather?view=all
 - https://learn.adafruit.com/tsl2561/overview
 
