@@ -21,12 +21,11 @@ The purpose of the project is to reduce the consumption of water while watering 
 - adafruit tsl2561 by adafruit
 
 # Software Installation
+Here are the steps to install and load the software
 
-To start the project use
-```bash
-"node server.js"
-```
 ## Librairies
+The librairies needed for the project are listed below:
+
 - Node.js (default in a Node.js environment)
 - fs (File System) - used for reading and writing files
 - express - used to create the web server
@@ -34,7 +33,16 @@ To start the project use
 - socket.io - used for real-time communication between the server and the client via sockets
 - chart.js - used to create interactive charts on the web page
 - ejs - used as a template engine for generating dynamic views
-
+  
+To install them write on a terminal:
+```bash
+npm install
+```
+## Server launch
+To start the project, write on a terminal :
+```bash
+node server.js
+```
 ## Source :
 - https://github.com/parastuffs/IT4L-IOT/wiki/Adafruit-Feather-M0-configuration
 - https://learn.adafruit.com/adafruit-feather-m0-radio-with-lora-radio-module/using-with-arduino-ide
