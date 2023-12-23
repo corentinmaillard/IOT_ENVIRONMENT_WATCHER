@@ -37,7 +37,7 @@ socket.on('event-light', (data) => {
     document.getElementById("affiche_light").innerHTML = data;
     
 });
-
+// show the curent data 
 async function fetchData() {
     const response = await fetch('/thing.json');
     const json = await response.json();

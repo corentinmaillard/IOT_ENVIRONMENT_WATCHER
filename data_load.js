@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// load all data from Json
 function load_data_from_Json(temperature,moisture,soilmoisture,lightsensor,time){
 
   try {
@@ -17,6 +18,7 @@ function load_data_from_Json(temperature,moisture,soilmoisture,lightsensor,time)
   }
 
 }
+// Function to add values to a list
 function add(list,value){
   if (list !== undefined) {
     list.push(value)
@@ -25,7 +27,7 @@ function add(list,value){
     console.log("List is undefined, not adding to the array.");
 }
 }
-
+// saves the new data to the Json
 function save(temperature,moisture,soilmoisture,lightsensor,time){
   
     const datas = {
