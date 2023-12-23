@@ -19,6 +19,7 @@ The purpose of the project is to reduce the consumption of water while watering 
 - DHT sensor library
 - Adafruit Unified Sensor by adafruit
 - adafruit tsl2561 by adafruit
+- Arduino Low Power by Arduino
 
 # Software Installation
 Here are the steps to install and launch the software
