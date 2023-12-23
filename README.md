@@ -40,7 +40,13 @@ To install them write on a terminal:
 npm install
 ```
 ## Server launch
-To start the project, write on a terminal :
+
+To start the project go to the "Nodejs_BackEnd_FrontEnd" folder by writing:
+```bash
+cd .\Nodejs_BackEnd_FrontEnd\
+```
+
+And to launch the application, write on a terminal :
 ```bash
 node server.js
 ```
