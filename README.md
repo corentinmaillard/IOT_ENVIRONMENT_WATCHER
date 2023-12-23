@@ -21,7 +21,7 @@ The purpose of the project is to reduce the consumption of water while watering 
 - adafruit tsl2561 by adafruit
 
 # Software Installation
-Here are the steps to install and load the software
+Here are the steps to install and launch the software
 
 ## Librairies
 The librairies needed for the project are listed below:
