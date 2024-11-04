@@ -22,6 +22,7 @@ The purpose of the project is to reduce the consumption of water while watering 
 ## Launch
 
 ```bash
+cd .\Nodejs_BackEnd_FrontEnd\
 node server.js
 ```
 
@@ -34,9 +35,11 @@ node server.js
 - Arduino Low Power by Arduino
 
 # Software Installation
+
 Here are the steps to install and launch the software
 
 ## Librairies
+
 The librairies needed for the project are listed below:
 
 - Node.js (default in a Node.js environment)
@@ -46,22 +49,27 @@ The librairies needed for the project are listed below:
 - socket.io - used for real-time communication between the server and the client via sockets
 - chart.js - used to create interactive charts on the web page
 - ejs - used as a template engine for generating dynamic views
-  
+
 To install them write on a terminal:
+
 ```bash
 npm install
 ```
+
 ## Server launch
 
 To start the project go to the "Nodejs_BackEnd_FrontEnd" folder by writing:
+
 ```bash
 cd .\Nodejs_BackEnd_FrontEnd\
 ```
 
 And to launch the application, write on a terminal :
+
 ```bash
 node server.js
 ```
+
 ## Source :
 
 - https://github.com/parastuffs/IT4L-IOT/wiki/Adafruit-Feather-M0-configuration
